@@ -1,0 +1,16 @@
+services:
+  smart-fleet-advisor:
+    image: postgres:15
+    restart: no
+    container_name: smart-fleet-advisor
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:${DB_PORT}
+
+volumes:
+  postgres_data:
