@@ -27,7 +27,7 @@ export class AuthService {
       Number(process.env.HASH_SALT),
     );
 
-    const createUser = this.usersService.create({
+    const createUser = await this.usersService.create({
       ...registerDto,
       password_hash: passwordHash,
     });
@@ -49,7 +49,7 @@ export class AuthService {
       email: user.email,
     };
 
-    const accessToken = await this.jwtService.signAsync(payload);
+    const accessToken = this.jwtService.sign(payload);
 
     return { message: 'Login successfully', accessToken };
   }
