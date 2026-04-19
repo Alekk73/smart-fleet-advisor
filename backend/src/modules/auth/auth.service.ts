@@ -53,4 +53,11 @@ export class AuthService {
 
     return { message: 'Login successfully', accessToken };
   }
+
+  async me(data: IJwtPayload) {
+    const user = await this.usersService.findOne(data.sub);
+    if (!user) throw new NotFoundException('User not found');
+
+    return user;
+  }
 }
