@@ -1,4 +1,4 @@
-import Nabvar from "../components/Nabvar";
+import Nabvar from "../components/layout/Nabvar";
 
 const Home = () => {
   return (

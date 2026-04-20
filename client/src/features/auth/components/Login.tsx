@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LoginService } from "../services/auth.service";
+import { loginService } from "../services/auth.service";
+import { useAuth } from "../../../context/AuthContext";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const auth = useAuth();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -16,7 +18,8 @@ const LoginForm = () => {
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     try {
-      await LoginService(credentials);
+      const userData = await loginService(credentials);
+      auth?.login(userData);
 
       navigate("/");
     } catch (error) {

@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { IS_PUBLIC_KEY } from '../../../common/decorators/public.decorator';
@@ -20,12 +25,20 @@ export class AuthGuard implements CanActivate {
     if (isPublic) return true;
 
     const req = context.switchToHttp().getRequest();
-    const token = String(req.headers.authorization).split(' ')[1];
+    const authHeader = req.headers.authorization;
 
-    const getDataUser: IJwtPayload = this.jwtService.verify(token);
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new UnauthorizedException('Token not found');
+    }
 
-    req.user = getDataUser;
+    const token = authHeader.split(' ')[1];
 
-    return true;
+    try {
+      const payload: IJwtPayload = this.jwtService.verify(token);
+      req.user = payload;
+      return true;
+    } catch (error) {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { RegisterService } from "../services/auth.service";
+import { registerService } from "../services/auth.service";
 import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
@@ -18,7 +18,7 @@ const RegisterForm = () => {
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     try {
-      await RegisterService(credentials);
+      await registerService(credentials);
 
       navigate("/login");
     } catch (error) {

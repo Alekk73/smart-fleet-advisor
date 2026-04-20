@@ -10,13 +10,20 @@ interface IRegisterCredentials extends ILoginCredentials {
   lastname: string;
 }
 
-export const LoginService = async (credentials: ILoginCredentials) => {
+export const getCurrentUser = async () => {
+  const res = await AxiosIntance.get("auth/me");
+  return res.data;
+};
+
+export const loginService = async (credentials: ILoginCredentials) => {
   const res = await AxiosIntance.post(`auth/login`, credentials);
   const token = res.data.accessToken;
 
   if (token) localStorage.setItem("token", token);
+
+  return await getCurrentUser();
 };
 
-export const RegisterService = async (credentials: IRegisterCredentials) => {
+export const registerService = async (credentials: IRegisterCredentials) => {
   await AxiosIntance.post("auth/register", credentials);
 };
