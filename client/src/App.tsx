@@ -4,6 +4,7 @@ import Register from "./features/auth/components/Register";
 import Home from "./pages/Home";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/shared/ProtectedRoute";
+import { Fleets } from "./pages/Fleets";
 
 function App() {
   return (
@@ -19,7 +20,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            {/* <Route path="/" element={<Home />} /> */}
+            <Route
+              path="/flota"
+              element={
+                <ProtectedRoute>
+                  <Fleets />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>

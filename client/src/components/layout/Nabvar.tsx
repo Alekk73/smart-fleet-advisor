@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/navbar-logo.png";
 
-const NAV_LINKS = [{ label: "Inicio", href: "/" }];
+const NAV_LINKS = [
+  { label: "Inicio", href: "/" },
+  { label: "Flota", href: "/flota" },
+];
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const user = useAuth();
 
-  // Inical del usuario
   const userInitial = user?.user?.name
     ? user.user.name.charAt(0).toUpperCase()
     : "U";
@@ -30,7 +32,6 @@ export default function Nav() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          {/* Logo */}
           <a href="/" className="flex items-center">
             <img
               src={logo}
@@ -39,7 +40,6 @@ export default function Nav() {
             />
           </a>
 
-          {/* Desktop Links */}
           <ul className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
             {NAV_LINKS.map((link) => (
               <li key={link.label}>
@@ -54,7 +54,6 @@ export default function Nav() {
             ))}
           </ul>
 
-          {/* User section in navbar */}
           <div className="hidden md:flex items-center gap-4">
             {!user ? (
               <>
@@ -80,7 +79,6 @@ export default function Nav() {
             )}
           </div>
 
-          {/* Hamburger Menu Toggle */}
           <button
             className="md:hidden flex flex-col gap-1.5 p-2 -mr-2 rounded-md hover:bg-gray-100 transition-colors"
             onClick={() => setMenuOpen((v) => !v)}
@@ -105,7 +103,6 @@ export default function Nav() {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       <div
         className={`md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 shadow-xl transition-all duration-300 origin-top ${
           menuOpen
